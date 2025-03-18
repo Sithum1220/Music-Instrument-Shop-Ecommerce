@@ -1,9 +1,8 @@
 import React from "react";
 import HomeImage from "../../../assests/img/Home image.png";
 import PrimaryButton from "../../Shared/PrimaryButton";
-import { Link } from "react-router-dom";
 
-const Home = () => {
+const Home:React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       {/* Hero Section */}

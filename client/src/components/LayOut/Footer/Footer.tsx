@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <footer className="bg-gradient-to-r from-indigo-900 to-purple-900 text-white">
       {/* Top Wave Separator */}
