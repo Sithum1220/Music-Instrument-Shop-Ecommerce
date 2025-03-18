@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assests/img/nk music logo.png';
 import { FiAward, FiUsers, FiMusic, FiHeart, FiStar, FiTruck, FiHeadphones, FiSmile } from 'react-icons/fi';
 
 // You can replace these with your actual team images

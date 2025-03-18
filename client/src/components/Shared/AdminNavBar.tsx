@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FiPackage, FiShoppingBag, FiMenu, FiX } from "react-icons/fi";
-import logo from "../../assests/img/nk music logo.png";
 
 interface NavbarProps {
   onSwitchToProducts?: () => void;

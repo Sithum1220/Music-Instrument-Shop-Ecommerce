@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "../../../../src/assests/img/nk music logo.png";
 import Button from "../../Shared/Button";
-import { IonIcon } from "@ionic/react";
 import { Link } from "react-router-dom";
 
 interface NavLink {
