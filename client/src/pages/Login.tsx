@@ -62,11 +62,7 @@ const Login: React.FC = () => {
       {/* Header with Logo */}
       <div className="p-6">
         <Link to="/" className="flex items-center">
-          {/* <img
-            alt="NKBEATS Logo"
-            src={logo}
-            className="h-14 w-auto"
-          /> */}
+          
           <span className="ml-2 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
             S BEATS
           </span>

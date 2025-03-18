@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom'; 
 import Swal from 'sweetalert2';
-import logo from '../assests/img/nk music logo.png'; 
-import { IonIcon } from '@ionic/react';
-import { trash } from 'ionicons/icons';
-import StripeCheckout, { Token } from 'react-stripe-checkout';
 import { IoLogOutOutline } from 'react-icons/io5';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 interface CartItem {
   _id: string;
@@ -19,6 +16,8 @@ interface CartItem {
 const PaymentPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const stripe = useStripe();
+  const elements = useElements();
 
   const { formData, cart }: { formData: any; cart: CartItem[] } = location.state || { formData: null, cart: [] };
 
@@ -28,21 +27,49 @@ const PaymentPage: React.FC = () => {
     address: formData?.address || '',
     contactNumber: formData?.contactNumber || '',
   });
+  const [isProcessing, setIsProcessing] = useState(false);
   
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove token from localStorage
-    navigate("/login"); // Navigate to login page
+    localStorage.removeItem("token");
+    navigate("/login");
   };
   
-  const handlePayment = async () => {
-    const token = localStorage.getItem('token'); // Get the token from localStorage
+  const handlePayment = async (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    if (!stripe || !elements) {
+      // Stripe.js hasn't loaded yet
+      return;
+    }
+
+    setIsProcessing(true);
+
+    const cardElement = elements.getElement(CardElement);
+    
+    if (!cardElement) {
+      setIsProcessing(false);
+      return;
+    }
 
     try {
+      // Create payment method
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      // If payment method created successfully, place the order
+      const token = localStorage.getItem('token');
+
       const response = await fetch('http://localhost:4000/orders/placeOrder', {
         method: 'POST',
         headers: {
           "Content-Type": 'application/json',
-          "Authorization": `Bearer ${token}`, // Include the token in the headers
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: formDataState.name,
@@ -53,6 +80,7 @@ const PaymentPage: React.FC = () => {
             quantity: item.quantity,
           })),
           totalAmount: calculateTotalPrice(),
+          paymentMethodId: paymentMethod.id,
         }),
       });
 
@@ -67,6 +95,8 @@ const PaymentPage: React.FC = () => {
         text: `Your payment has been processed successfully. Order ID: ${responseData.orderId}`,
       });
 
+      // Navigate to order confirmation or clear cart
+      navigate('/order-success', { state: { orderId: responseData.orderId } });
       
     } catch (error) {
       console.error('Error processing payment:', error);
@@ -75,11 +105,31 @@ const PaymentPage: React.FC = () => {
         title: 'Payment Error',
         text: 'There was an error processing your payment. Please try again.',
       });
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   const calculateTotalPrice = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  const CARD_ELEMENT_OPTIONS = {
+    style: {
+      base: {
+        color: '#32325d',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    },
   };
 
   return (
@@ -132,8 +182,8 @@ const PaymentPage: React.FC = () => {
                       <p className="text-sm text-gray-600 mt-1">Quantity: {item.quantity}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">Rs. {item.price}</p>
-                      <p className="text-sm text-gray-600 mt-1">Total: Rs. {item.price * item.quantity}</p>
+                      <p className="text-sm font-medium text-gray-900">USD. {item.price}</p>
+                      <p className="text-sm text-gray-600 mt-1">Total: USD. {item.price * item.quantity}</p>
                     </div>
                   </div>
                 ))}
@@ -142,7 +192,7 @@ const PaymentPage: React.FC = () => {
               <div className="px-6 py-4 bg-gray-50">
                 <div className="flex justify-between text-base font-medium text-gray-900">
                   <p>Total</p>
-                  <p>Rs. {calculateTotalPrice()}</p>
+                  <p>USD. {calculateTotalPrice()}</p>
                 </div>
                 <p className="mt-1 text-sm text-gray-500">Shipping and taxes will be calculated at checkout.</p>
               </div>
@@ -155,7 +205,7 @@ const PaymentPage: React.FC = () => {
               </div>
               
               <div className="p-6">
-                <form>
+                <form onSubmit={handlePayment}>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -189,15 +239,23 @@ const PaymentPage: React.FC = () => {
                         required
                       />
                     </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Card Details</label>
+                      <div className="w-full px-4 py-3 border border-gray-300 rounded-lg focus-within:ring-indigo-500 focus-within:border-indigo-500">
+                        <CardElement options={CARD_ELEMENT_OPTIONS} />
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="mt-6">
-                  <StripeCheckout
-                stripeKey="pk_test_51Oqpc6DDs5wFiqTUqxEnnoVTjDMMCjMgbCnSwxKmVcHMCT8rLXO4wL7nTptnarrKOUMw4XRe1RNmvTBfWgC3t3mp00rTvqUUAW" // Replace with your Stripe publishable key
-                token={handlePayment}
-                name="NKBEATS"
-                amount={calculateTotalPrice() * 100}
-              />
+                    <button
+                      type="submit"
+                      disabled={!stripe || isProcessing}
+                      className="w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-colors disabled:opacity-50"
+                    >
+                      {isProcessing ? 'Processing...' : 'Pay Now'}
+                    </button>
                   </div>
                 </form>
               </div>
@@ -215,7 +273,7 @@ const PaymentPage: React.FC = () => {
             </div>
             
             <p className="text-sm text-gray-500">
-              &copy; {new Date().getFullYear()} NKBEATS. All rights reserved.
+              &copy; {new Date().getFullYear()} S BEATS. All rights reserved.
             </p>
           </div>
         </div>

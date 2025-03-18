@@ -546,7 +546,7 @@ const ProductListingPage: React.FC = () => {
                       <div className="text-xs text-gray-500 mb-1">{product.category}</div>
                       <h3 className="text-sm sm:text-base font-medium text-gray-900 mb-1 line-clamp-2">{product.name}</h3>
                       <div className="flex justify-between items-center mt-2">
-                        <p className="text-lg font-bold text-indigo-600">Rs. {product.price.toLocaleString()}</p>
+                        <p className="text-lg font-bold text-indigo-600">USD. {product.price.toLocaleString()}</p>
                         {product.quantity > 0 && (
                           <span className="text-xs text-green-600 bg-green-50 rounded-full px-2 py-1">
                             In Stock
@@ -615,7 +615,7 @@ const ProductListingPage: React.FC = () => {
                       </div>
                       
                       <div className="mt-auto flex items-end justify-between">
-                        <p className="text-xl font-bold text-indigo-600">Rs. {product.price.toLocaleString()}</p>
+                        <p className="text-xl font-bold text-indigo-600">USD. {product.price.toLocaleString()}</p>
                         <button
                           onClick={() => addToCart(product)}
                           disabled={product.quantity === 0}
@@ -722,7 +722,7 @@ const ProductListingPage: React.FC = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-4 md:mb-0">
-              <span className="text-gray-700 font-medium">NKBEATS</span>
+              <span className="text-gray-700 font-medium">S BEATS</span>
             </div>
             
             <p className="text-sm text-gray-500">

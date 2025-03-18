@@ -32,13 +32,13 @@ const AboutUs: React.FC = () => {
                 Home
               </Link>
               <Link
-                to="/product-list"
+                to="/login"
                 className="text-gray-700 hover:text-indigo-600 transition-colors"
               >
                 Products
               </Link>
               <Link
-                to="/contact-us"
+                to="/ContactUs"
                 className="text-gray-700 hover:text-indigo-600 transition-colors"
               >
                 Contact

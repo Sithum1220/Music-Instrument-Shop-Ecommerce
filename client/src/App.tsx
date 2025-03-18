@@ -13,6 +13,7 @@ import AdminDashBoard from "./pages/AdminDashBoard";
 import StripeProvider from "./api/stripePovider"; 
 import AboutUs from "./pages/AboutUSPage";
 import ContactUs from "./pages/ContactPage";
+import OrderSuccess from "./pages/OrderSuccessPage";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />

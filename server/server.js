@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 // Configure CORS to allow requests from the frontend (running on port 3000)
 app.use(cors({
-  origin: 'http://localhost:3000',  // Adjust this if your frontend is running on a different domain
+  origin: 'http://localhost:5173',  // Adjust this if your frontend is running on a different domain
   credentials: true,  // Allow cookies to be sent with requests
 }));
 

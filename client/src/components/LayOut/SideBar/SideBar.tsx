@@ -27,8 +27,8 @@ const Sidebar: React.FC<SidebarProps> = ({ showSidebar }) => {
       {/* Header & Logo */}
       <div className="p-5 border-b border-indigo-800">
         <div className="flex items-center justify-center mb-6">
-          <img src={logo} alt="NKBEATS Logo" className="h-10 w-auto" />
-          <span className="ml-2 text-xl font-bold text-white">NKBEATS</span>
+          <img src={logo} alt="SBEATS Logo" className="h-10 w-auto" />
+          <span className="ml-2 text-xl font-bold text-white">S BEATS</span>
         </div>
         <div className="flex flex-col items-center">
           <h1 className="text-xl text-white font-bold">Admin Dashboard</h1>
@@ -125,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({ showSidebar }) => {
         </button>
         
         <div className="mt-4 text-center text-xs text-indigo-300">
-          <p>NKBEATS Admin Panel</p>
+          <p>S BEATS Admin Panel</p>
           <p>© {new Date().getFullYear()} All rights reserved</p>
         </div>
       </div>

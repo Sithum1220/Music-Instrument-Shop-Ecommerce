@@ -292,7 +292,7 @@ const OrderLoadPage: React.FC = () => {
                         <div className="text-xs text-gray-500 truncate max-w-xs">{order.address}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-semibold text-indigo-600">Rs. {order.totalAmount.toLocaleString()}</div>
+                        <div className="text-sm font-semibold text-indigo-600">USD. {order.totalAmount.toLocaleString()}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`

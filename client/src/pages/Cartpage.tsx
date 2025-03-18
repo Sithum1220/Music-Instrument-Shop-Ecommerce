@@ -253,7 +253,7 @@ const CartPage: React.FC = () => {
                             
                             <div className="flex items-center mt-2 sm:mt-0">
                               <span className="text-lg font-medium text-indigo-600">
-                                Rs. {item.price.toLocaleString()}
+                                USD. {item.price.toLocaleString()}
                               </span>
                             </div>
                           </div>
@@ -296,7 +296,7 @@ const CartPage: React.FC = () => {
                 <div className="bg-gray-50 p-4 sm:p-6">
                   <div className="flex justify-between items-center text-base font-medium text-gray-900">
                     <p>Subtotal</p>
-                    <p>Rs. {calculateSubtotal().toLocaleString()}</p>
+                    <p>USD. {calculateSubtotal().toLocaleString()}</p>
                   </div>
                 </div>
               </div>
@@ -311,7 +311,7 @@ const CartPage: React.FC = () => {
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <p className="text-gray-600">Subtotal</p>
-                      <p className="text-gray-900">Rs. {calculateSubtotal().toLocaleString()}</p>
+                      <p className="text-gray-900">USD. {calculateSubtotal().toLocaleString()}</p>
                     </div>
                     
                     <div className="flex justify-between">
@@ -321,7 +321,7 @@ const CartPage: React.FC = () => {
                     
                     <div className="flex justify-between font-medium text-base pt-3 border-t border-gray-200">
                       <p>Total</p>
-                      <p className="text-indigo-600">Rs. {calculateTotalPrice().toLocaleString()}</p>
+                      <p className="text-indigo-600">USD. {calculateTotalPrice().toLocaleString()}</p>
                     </div>
                   </div>
                 </div>
@@ -421,7 +421,7 @@ const CartPage: React.FC = () => {
       <footer className="bg-white border-t border-gray-200 mt-12">
         <div className="container mx-auto px-4 py-6">
           <p className="text-center text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} NKBEATS. All rights reserved.
+            &copy; {new Date().getFullYear()} S BEATS. All rights reserved.
           </p>
         </div>
       </footer>
