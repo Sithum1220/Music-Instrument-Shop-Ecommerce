@@ -3,7 +3,6 @@ import SignUpImage from "../assests/img/SignUp Image.png";
 import { signupUser } from "../api/authApi.js";
 import Swal from "sweetalert2";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import logo from '../assests/img/nk music logo.png';
 
 interface SignUpProps {}
 
