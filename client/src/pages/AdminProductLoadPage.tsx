@@ -48,7 +48,10 @@ const AdminProductLoadPage: React.FC = () => {
         icon: 'error',
         title: 'Connection Error',
         text: 'Could not load products. Please check your connection.',
-        confirmButtonColor: '#4F46E5'
+        background: '#111827',
+        color: '#fff',
+        iconColor: '#FB7185',
+        confirmButtonColor: '#D946EF'
       });
     }
   };
@@ -93,10 +96,13 @@ const AdminProductLoadPage: React.FC = () => {
         text: 'Are you sure you want to delete this product?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#6366F1',
-        cancelButtonColor: '#F43F5E',
+        confirmButtonColor: '#D946EF',
+        cancelButtonColor: '#FB7185',
         confirmButtonText: 'Yes, delete it!',
         cancelButtonText: 'Cancel',
+        background: '#111827',
+        color: '#fff',
+        iconColor: '#FB7185'
       });
   
       if (result.isConfirmed) {
@@ -106,7 +112,10 @@ const AdminProductLoadPage: React.FC = () => {
           icon: 'success',
           title: 'Deleted!',
           text: 'The product has been deleted.',
-          confirmButtonColor: '#6366F1'
+          background: '#111827',
+          color: '#fff',
+          iconColor: '#D946EF',
+          confirmButtonColor: '#D946EF'
         });
       }
     } catch (error) {
@@ -115,7 +124,10 @@ const AdminProductLoadPage: React.FC = () => {
         icon: 'error',
         title: 'Error!',
         text: 'Failed to delete product. Please try again later.',
-        confirmButtonColor: '#6366F1'
+        background: '#111827',
+        color: '#fff',
+        iconColor: '#FB7185',
+        confirmButtonColor: '#D946EF'
       });
     }
   };
@@ -145,18 +157,14 @@ const AdminProductLoadPage: React.FC = () => {
     <div className="w-full p-4">
       <div className="mb-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4 sm:mb-0">
-            Product Management
-          </h1>
-          
           <form onSubmit={handleSearch} className="relative w-full sm:w-auto">
-            <div className={`flex items-center bg-white rounded-lg overflow-hidden border transition-all ${
-              isSearchFocused ? 'border-indigo-500 ring-2 ring-indigo-200' : 'border-gray-300'
+            <div className={`flex items-center bg-gray-800/70 rounded-lg overflow-hidden border transition-all duration-300 ${
+              isSearchFocused ? 'border-[#D946EF] ring-2 ring-[#D946EF]/20' : 'border-gray-700'
             }`}>
               <input
                 type="text"
                 placeholder="Search products..."
-                className="p-2 pl-4 pr-10 w-full sm:w-64 focus:outline-none"
+                className="p-2 pl-4 pr-10 w-full sm:w-64 bg-transparent text-gray-200 focus:outline-none placeholder-gray-500"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
@@ -165,7 +173,7 @@ const AdminProductLoadPage: React.FC = () => {
               {searchTerm && (
                 <button 
                   type="button"
-                  className="absolute right-12 text-gray-500 hover:text-gray-700"
+                  className="absolute right-12 text-gray-400 hover:text-gray-200 transition-colors duration-300"
                   onClick={handleClearSearch}
                 >
                   <IoClose className="w-5 h-5" />
@@ -173,7 +181,7 @@ const AdminProductLoadPage: React.FC = () => {
               )}
               <button 
                 type="submit" 
-                className="bg-indigo-600 text-white p-2 rounded-r-lg hover:bg-indigo-700 transition-colors"
+                className="bg-gradient-to-r from-[#3B1D8F] to-[#D946EF] text-white p-2 rounded-r-lg hover:opacity-90 transition-opacity duration-300"
               >
                 <IoSearch className="w-5 h-5" />
               </button>
@@ -181,26 +189,31 @@ const AdminProductLoadPage: React.FC = () => {
           </form>
         </div>
 
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-gray-900/70 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden border border-gray-800">
           {loading ? (
             <div className="p-12 flex flex-col items-center justify-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600 mb-4"></div>
-              <p className="text-gray-500">Loading products...</p>
+              <div className="relative w-16 h-16">
+                <div className="absolute top-0 left-0 right-0 bottom-0 animate-spin rounded-full border-4 border-gray-700 border-t-[#D946EF]"></div>
+                <div className="absolute top-2 left-2 right-2 bottom-2 animate-ping rounded-full border-4 border-[#D946EF] opacity-20"></div>
+              </div>
+              <p className="text-gray-400 mt-4">Loading products...</p>
             </div>
           ) : products.length === 0 ? (
             <div className="p-12 text-center">
-              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-              </svg>
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No products found</h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <div className="bg-gray-800/50 p-4 rounded-full inline-block mb-4">
+                <svg className="mx-auto h-12 w-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                </svg>
+              </div>
+              <h3 className="mt-2 text-lg font-medium text-white">No products found</h3>
+              <p className="mt-1 text-gray-400">
                 {searchTerm ? `No results for "${searchTerm}"` : "Start by adding a product."}
               </p>
               {searchTerm && (
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="inline-flex items-center px-4 py-2 border border-gray-700 bg-gray-800 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D946EF] transition-colors duration-300"
                     onClick={handleClearSearch}
                   >
                     <IoRefresh className="-ml-0.5 mr-2 h-4 w-4" /> Clear search
@@ -211,78 +224,83 @@ const AdminProductLoadPage: React.FC = () => {
           ) : (
             <>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-gray-800">
+                  <thead className="bg-gray-800/50">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Product</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Details</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Price</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Quantity</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Category</th>
+                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-800">
                     {products.map((product) => (
-                      <tr key={product._id} className="hover:bg-gray-50 transition-colors">
+                      <tr key={product._id} className="hover:bg-gray-800/50 transition-colors duration-200">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="flex-shrink-0 h-14 w-14 rounded bg-gray-100 overflow-hidden">
+                            <div className="flex-shrink-0 h-14 w-14 bg-gray-800 rounded-lg overflow-hidden border border-gray-700 group-hover:border-[#D946EF] transition-colors duration-300 relative">
                               {product.image ? (
-                                <img 
-                                  src={product.image} 
-                                  alt={product.name} 
-                                  className="h-full w-full object-cover"
-                                />
+                                <div className="relative h-full w-full">
+                                  <div className="absolute inset-0 bg-gradient-to-br from-[#D946EF]/10 to-[#FB7185]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+                                  <img 
+                                    src={product.image} 
+                                    alt={product.name} 
+                                    className="h-full w-full object-cover"
+                                  />
+                                </div>
                               ) : (
-                                <div className="h-full w-full flex items-center justify-center text-gray-400">
+                                <div className="h-full w-full flex items-center justify-center text-gray-500">
                                   No Image
                                 </div>
                               )}
                             </div>
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">{product.name}</div>
-                              <div className="text-sm text-gray-500">ID: {product._id.substring(0, 8)}...</div>
+                              <div className="text-sm font-medium text-white">{product.name}</div>
+                              <div className="text-xs text-gray-500 font-mono">ID: {product._id.substring(0, 8)}...</div>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="text-sm text-gray-900 max-w-xs">
+                          <div className="text-sm text-gray-300 max-w-xs">
                             {getTruncatedText(product.description, 60)}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-indigo-600">${product.price.toFixed(2)}</div>
+                          <div className="text-sm font-medium text-[#D946EF]">${product.price.toFixed(2)}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                             product.quantity > 10 
-                              ? 'bg-green-100 text-green-800' 
+                              ? 'bg-emerald-900/30 text-emerald-400 border border-emerald-800/50' 
                               : product.quantity > 0 
-                                ? 'bg-yellow-100 text-yellow-800' 
-                                : 'bg-red-100 text-red-800'
+                                ? 'bg-amber-900/30 text-amber-400 border border-amber-800/50' 
+                                : 'bg-red-900/30 text-red-400 border border-red-800/50'
                           }`}>
                             {product.quantity} in stock
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                           {product.category}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <button
-                            onClick={() => handleEditProduct(product._id)}
-                            className="text-indigo-600 hover:text-indigo-900 mr-3 p-1 hover:bg-indigo-50 rounded"
-                            title="Edit product"
-                          >
-                            <IoPencil className="w-5 h-5" />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteProduct(product._id)}
-                            className="text-rose-600 hover:text-rose-900 p-1 hover:bg-rose-50 rounded"
-                            title="Delete product"
-                          >
-                            <IoTrash className="w-5 h-5" />
-                          </button>
+                          <div className="flex justify-end space-x-2">
+                            <button
+                              onClick={() => handleEditProduct(product._id)}
+                              className="text-[#D946EF] hover:text-[#FB7185] p-1.5 hover:bg-[#D946EF]/10 rounded-full transition-colors duration-300"
+                              title="Edit product"
+                            >
+                              <IoPencil className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteProduct(product._id)}
+                              className="text-[#FB7185] hover:text-[#FB7185] p-1.5 hover:bg-[#FB7185]/10 rounded-full transition-colors duration-300"
+                              title="Delete product"
+                            >
+                              <IoTrash className="w-5 h-5" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -292,12 +310,12 @@ const AdminProductLoadPage: React.FC = () => {
               
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                <div className="bg-gray-800/50 px-4 py-3 flex items-center justify-between border-t border-gray-800 sm:px-6">
                   <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                      <p className="text-sm text-gray-700">
-                        Showing page <span className="font-medium">{currentPage}</span> of{' '}
-                        <span className="font-medium">{totalPages}</span> pages
+                      <p className="text-sm text-gray-400">
+                        Showing page <span className="font-medium text-gray-300">{currentPage}</span> of{' '}
+                        <span className="font-medium text-gray-300">{totalPages}</span> pages
                       </p>
                     </div>
                     <div>
@@ -305,10 +323,10 @@ const AdminProductLoadPage: React.FC = () => {
                         <button
                           onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                           disabled={currentPage === 1}
-                          className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${
+                          className={`relative inline-flex items-center px-2 py-2 rounded-l-md border ${
                             currentPage === 1 
-                              ? 'text-gray-300 cursor-not-allowed' 
-                              : 'text-gray-500 hover:bg-gray-50'
+                              ? 'border-gray-700 bg-gray-800 text-gray-600 cursor-not-allowed' 
+                              : 'border-gray-700 bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white transition-colors duration-300'
                           }`}
                         >
                           <span className="sr-only">Previous</span>
@@ -327,7 +345,7 @@ const AdminProductLoadPage: React.FC = () => {
                           
                           if (!showPages && pageNum === 2 && currentPage > 4) {
                             return (
-                              <span key="ellipsis-start" className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                              <span key="ellipsis-start" className="relative inline-flex items-center px-4 py-2 border border-gray-700 bg-gray-900 text-sm font-medium text-gray-400">
                                 ...
                               </span>
                             );
@@ -335,7 +353,7 @@ const AdminProductLoadPage: React.FC = () => {
                           
                           if (!showPages && pageNum === totalPages - 1 && currentPage < totalPages - 3) {
                             return (
-                              <span key="ellipsis-end" className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                              <span key="ellipsis-end" className="relative inline-flex items-center px-4 py-2 border border-gray-700 bg-gray-900 text-sm font-medium text-gray-400">
                                 ...
                               </span>
                             );
@@ -346,10 +364,10 @@ const AdminProductLoadPage: React.FC = () => {
                               <button
                                 key={i}
                                 onClick={() => handlePageChange(pageNum)}
-                                className={`relative inline-flex items-center px-4 py-2 border ${
+                                className={`relative inline-flex items-center px-4 py-2 border transition-colors duration-300 ${
                                   currentPage === pageNum
-                                    ? 'bg-indigo-600 text-white border-indigo-600 z-10'
-                                    : 'bg-white text-gray-500 hover:bg-gray-50 border-gray-300'
+                                    ? 'bg-gradient-to-r from-[#3B1D8F] to-[#D946EF] text-white border-[#3B1D8F] z-10'
+                                    : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border-gray-700'
                                 } text-sm font-medium`}
                               >
                                 {pageNum}
@@ -363,10 +381,10 @@ const AdminProductLoadPage: React.FC = () => {
                         <button
                           onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                           disabled={currentPage === totalPages}
-                          className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${
+                          className={`relative inline-flex items-center px-2 py-2 rounded-r-md border ${
                             currentPage === totalPages 
-                              ? 'text-gray-300 cursor-not-allowed' 
-                              : 'text-gray-500 hover:bg-gray-50'
+                              ? 'border-gray-700 bg-gray-800 text-gray-600 cursor-not-allowed' 
+                              : 'border-gray-700 bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white transition-colors duration-300'
                           }`}
                         >
                           <span className="sr-only">Next</span>
@@ -383,24 +401,24 @@ const AdminProductLoadPage: React.FC = () => {
                     <button
                       onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                       disabled={currentPage === 1}
-                      className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
+                      className={`relative inline-flex items-center px-4 py-2 border rounded-md ${
                         currentPage === 1 
-                          ? 'text-gray-300 bg-gray-50 cursor-not-allowed' 
-                          : 'text-gray-700 bg-white hover:bg-gray-50'
+                          ? 'border-gray-700 bg-gray-800 text-gray-600 cursor-not-allowed' 
+                          : 'border-gray-700 bg-gray-900 text-gray-300 hover:bg-gray-800'
                       }`}
                     >
                       Previous
                     </button>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-400">
                       Page {currentPage} of {totalPages}
                     </span>
                     <button
                       onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                       disabled={currentPage === totalPages}
-                      className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
+                      className={`relative inline-flex items-center px-4 py-2 border rounded-md ${
                         currentPage === totalPages 
-                          ? 'text-gray-300 bg-gray-50 cursor-not-allowed' 
-                          : 'text-gray-700 bg-white hover:bg-gray-50'
+                          ? 'border-gray-700 bg-gray-800 text-gray-600 cursor-not-allowed' 
+                          : 'border-gray-700 bg-gray-900 text-gray-300 hover:bg-gray-800'
                       }`}
                     >
                       Next
@@ -415,8 +433,8 @@ const AdminProductLoadPage: React.FC = () => {
 
       {/* Render the AdminProductUpdateForm when a product is selected for editing */}
       {selectedProduct && (
-        <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl mx-4 overflow-hidden">
+        <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <div className="bg-gray-900 rounded-lg shadow-2xl w-full max-w-3xl mx-4 overflow-hidden border border-gray-800">
             <AdminProductUpdateForm
               product={selectedProduct}
               onClose={() => setSelectedProduct(null)}

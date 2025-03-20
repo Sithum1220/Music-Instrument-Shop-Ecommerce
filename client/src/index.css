@@ -135,3 +135,64 @@
     50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
     100% { transform: translateY(-40px) translateX(0); opacity: 0; }
   }
+
+  @keyframes floatingAboutParticle {
+    0% { transform: translateY(0) translateX(0); opacity: 0.4; }
+    50% { transform: translateY(-30px) translateX(10px); opacity: 0.6; }
+    100% { transform: translateY(-60px) translateX(0); opacity: 0; }
+  }
+
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJnIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZmIiBzdG9wLW9wYWNpdHk9IjEiLz48c3RvcCBvZmZzZXQ9IjElIiBzdG9wLWNvbG9yPSIjZmZmIiBzdG9wLW9wYWNpdHk9IjAiLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48ZyBmaWxsPSJub25lIiBzdHJva2U9Im5vbmUiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIi8+PGNpcmNsZSBjeD0iMTgwIiBjeT0iNTIiIHI9IjAuNSIgZmlsbD0idXJsKCNnKSIvPjwvZz48L3N2Zz4=') repeat;
+    opacity: 0.4;
+  }
+
+  @keyframes floatingAdminParticle {
+    0% { transform: translateY(0) translateX(0); opacity: 0.4; }
+    50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+    100% { transform: translateY(-40px) translateX(0); opacity: 0; }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @keyframes successParticle {
+    0% { 
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0.7;
+    }
+    100% { 
+      transform: translate(-50%, -50%) translateY(-100px) scale(1);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 8px rgba(217, 70, 239, 0.5));
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) rotate(0); opacity: 0.4; }
+    50% { transform: translateY(-100px) rotate(15deg); opacity: 0.6; }
+    100% { transform: translateY(-200px) rotate(0); opacity: 0; }
+  }
+  
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 8px rgba(217, 70, 239, 0.5));
+  }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom'; 
 import Swal from 'sweetalert2';
 import { IoLogOutOutline } from 'react-icons/io5';
+import { FiCreditCard, FiCheckCircle, FiShield } from 'react-icons/fi';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 interface CartItem {
@@ -93,6 +94,10 @@ const PaymentPage: React.FC = () => {
         icon: 'success',
         title: 'Payment Successful!',
         text: `Your payment has been processed successfully. Order ID: ${responseData.orderId}`,
+        background: '#1E1E2E',
+        color: '#E2E8F0',
+        iconColor: '#D946EF',
+        confirmButtonColor: '#D946EF'
       });
 
       // Navigate to order confirmation or clear cart
@@ -104,6 +109,10 @@ const PaymentPage: React.FC = () => {
         icon: 'error',
         title: 'Payment Error',
         text: 'There was an error processing your payment. Please try again.',
+        background: '#1E1E2E',
+        color: '#E2E8F0',
+        iconColor: '#FB7185',
+        confirmButtonColor: '#D946EF'
       });
     } finally {
       setIsProcessing(false);
@@ -117,60 +126,81 @@ const PaymentPage: React.FC = () => {
   const CARD_ELEMENT_OPTIONS = {
     style: {
       base: {
-        color: '#32325d',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        color: '#E2E8F0',
+        fontFamily: '"Inter", "Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: 'antialiased',
         fontSize: '16px',
         '::placeholder': {
-          color: '#aab7c4',
+          color: '#64748B',
+        },
+        ':-webkit-autofill': {
+          color: '#E2E8F0',
         },
       },
       invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a',
+        color: '#FB7185',
+        iconColor: '#FB7185',
       },
     },
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-[#111827] text-gray-200">
+      {/* Animated background */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PGcgdHJhbnNmb3JtPSJzY2FsZSgxKSI+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzgxMTdFIiBzdHJva2Utd2lkdGg9IjAuNSIgZD0iTS41LjVoMjB2MjBoLTIweiIvPjwvZz48L3N2Zz4=')] opacity-10"></div>
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#D946EF] rounded-full opacity-5 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#FB7185] rounded-full opacity-5 blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+      </div>
+
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-3">
+      <header className="bg-gray-900/70 backdrop-blur-md border-b border-gray-800 shadow-lg z-30">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center">
-              <span className="ml-2 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600 hidden sm:inline-block">
-                S BEATS
+            <Link to="/" className="flex items-center space-x-2 group">
+              <div className="relative flex items-center justify-center w-8 h-8">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#D946EF] to-[#FB7185] rounded-md opacity-60 blur-sm group-hover:opacity-80 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gray-900 rounded-md transform -translate-x-0.5 -translate-y-0.5"></div>
+                <span className="relative text-white font-bold">EN</span>
+              </div>
+              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#D946EF] to-[#FB7185] hidden sm:inline-block">
+                ECHO NEXUS
               </span>
             </Link>
             
-            <button
-              onClick={handleLogout}
-              className="flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-colors"
-            >
-              <IoLogOutOutline className="mr-2" />
-              Log Out
-            </button>
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#D946EF] to-[#FB7185] rounded-md blur opacity-60 group-hover:opacity-100 transition duration-300"></div>
+              <button
+                onClick={handleLogout}
+                className="relative bg-gray-900 text-white px-4 py-2 rounded-md font-medium z-10 flex items-center"
+              >
+                <IoLogOutOutline className="mr-2" />
+                Log Out
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 flex-grow">
+      <main className="container mx-auto px-4 py-8 flex-grow relative z-10">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-900 mb-8">Complete Your Purchase</h1>
+          <h1 className="text-2xl font-bold text-white mb-8 relative inline-block">
+            <span className="relative z-10">Complete Your Purchase</span>
+            <span className="absolute -bottom-1 left-0 w-1/3 h-1 bg-gradient-to-r from-[#D946EF] to-[#FB7185] rounded-full"></span>
+          </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left: Order Summary */}
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="text-lg font-medium text-gray-900">Order Summary</h2>
+            <div className="bg-gray-900/60 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden border border-gray-800">
+              <div className="px-6 py-4 border-b border-gray-800">
+                <h2 className="text-lg font-medium text-white">Order Summary</h2>
               </div>
               
-              <div className="divide-y divide-gray-200">
+              <div className="divide-y divide-gray-800">
                 {cartItems.map((item) => (
-                  <div key={item._id} className="p-4 flex items-center">
-                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 bg-gray-100">
+                  <div key={item._id} className="p-4 flex items-center group hover:bg-gray-800/30 transition-colors duration-300">
+                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-700 bg-gray-800">
                       <img
                         src={item.image}
                         alt={item.name}
@@ -178,103 +208,182 @@ const PaymentPage: React.FC = () => {
                       />
                     </div>
                     <div className="ml-4 flex-grow">
-                      <h3 className="text-sm font-medium text-gray-900">{item.name}</h3>
-                      <p className="text-sm text-gray-600 mt-1">Quantity: {item.quantity}</p>
+                      <h3 className="text-sm font-medium text-white group-hover:text-[#FB7185] transition-colors duration-300">{item.name}</h3>
+                      <p className="text-sm text-gray-400 mt-1">Quantity: {item.quantity}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">USD. {item.price}</p>
-                      <p className="text-sm text-gray-600 mt-1">Total: USD. {item.price * item.quantity}</p>
+                      <p className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-[#D946EF] to-[#FB7185]">USD. {item.price}</p>
+                      <p className="text-sm text-gray-400 mt-1">Total: <span className="text-white">{item.price * item.quantity}</span></p>
                     </div>
                   </div>
                 ))}
               </div>
               
-              <div className="px-6 py-4 bg-gray-50">
-                <div className="flex justify-between text-base font-medium text-gray-900">
-                  <p>Total</p>
-                  <p>USD. {calculateTotalPrice()}</p>
+              <div className="px-6 py-4 bg-gray-800/50">
+                <div className="flex justify-between text-base font-medium">
+                  <p className="text-white">Total</p>
+                  <p className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#D946EF] to-[#FB7185]">
+                    USD. {calculateTotalPrice()}
+                  </p>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">Shipping and taxes will be calculated at checkout.</p>
+                <p className="mt-1 text-sm text-gray-400">Shipping and taxes will be calculated at checkout.</p>
               </div>
             </div>
 
             {/* Right: Payment Form */}
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="text-lg font-medium text-gray-900">Payment Details</h2>
+            <div className="bg-gray-900/60 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden border border-gray-800">
+              <div className="px-6 py-4 border-b border-gray-800">
+                <h2 className="text-lg font-medium text-white">Payment Details</h2>
               </div>
               
               <div className="p-6">
                 <form onSubmit={handlePayment}>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">Name</label>
                       <input
                         type="text"
                         value={formDataState.name}
                         onChange={(e) => setFormDataState({ ...formDataState, name: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-[#D946EF] focus:border-[#D946EF] text-white placeholder-gray-500"
                         required
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">Address</label>
                       <textarea
                         value={formDataState.address}
                         onChange={(e) => setFormDataState({ ...formDataState, address: e.target.value })}
                         rows={3}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-[#D946EF] focus:border-[#D946EF] text-white placeholder-gray-500"
                         required
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">Contact Number</label>
                       <input
                         type="tel"
                         value={formDataState.contactNumber}
                         onChange={(e) => setFormDataState({ ...formDataState, contactNumber: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-[#D946EF] focus:border-[#D946EF] text-white placeholder-gray-500"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Card Details</label>
-                      <div className="w-full px-4 py-3 border border-gray-300 rounded-lg focus-within:ring-indigo-500 focus-within:border-indigo-500">
+                      <label className="block text-sm font-medium text-gray-300 mb-1">Card Details</label>
+                      <div className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus-within:ring-[#D946EF] focus-within:border-[#D946EF]">
                         <CardElement options={CARD_ELEMENT_OPTIONS} />
                       </div>
                     </div>
+                    
+                    <div className="mt-2 flex items-center space-x-2 text-gray-400 text-xs">
+                      <FiShield className="w-4 h-4 text-[#D946EF]" />
+                      <span>Your payment information is encrypted and secure</span>
+                    </div>
                   </div>
                   
-                  <div className="mt-6">
-                    <button
-                      type="submit"
-                      disabled={!stripe || isProcessing}
-                      className="w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-colors disabled:opacity-50"
-                    >
-                      {isProcessing ? 'Processing...' : 'Pay Now'}
-                    </button>
+                  <div className="mt-6 space-y-4">
+                    <div className="flex items-center space-x-2 text-gray-300">
+                      <FiCheckCircle className="w-5 h-5 text-[#D946EF]" />
+                      <span>All transactions are secure and encrypted</span>
+                    </div>
+                    
+                    <div className="relative group">
+                      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#D946EF] to-[#FB7185] rounded-md blur opacity-60 group-hover:opacity-100 transition duration-300"></div>
+                      <button
+                        type="submit"
+                        disabled={!stripe || isProcessing}
+                        className="relative w-full px-4 py-3 bg-gray-900 text-white font-medium rounded-md z-10 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isProcessing ? (
+                          <>
+                            <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Processing Payment...
+                          </>
+                        ) : (
+                          <>
+                            <FiCreditCard className="mr-2" />
+                            Pay Now • USD. {calculateTotalPrice()}
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>
             </div>
           </div>
+          
+          {/* Payment Security Notes */}
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { 
+                icon: <FiShield className="w-6 h-6 text-[#D946EF]" />, 
+                title: "Secure Payment", 
+                text: "Your payment information is encrypted with industry-standard protocols" 
+              },
+              { 
+                icon: <FiCreditCard className="w-6 h-6 text-[#FB7185]" />, 
+                title: "Multiple Payment Options", 
+                text: "We accept all major credit cards and debit cards" 
+              },
+              { 
+                icon: <FiCheckCircle className="w-6 h-6 text-[#3B1D8F]" />, 
+                title: "Verified Processing", 
+                text: "All transactions are processed by verified payment providers" 
+              }
+            ].map((item, index) => (
+              <div key={index} className="bg-gray-900/40 backdrop-blur-sm p-4 rounded-lg border border-gray-800 flex items-start space-x-3">
+                <div className="mt-1">{item.icon}</div>
+                <div>
+                  <h3 className="text-white font-medium">{item.title}</h3>
+                  <p className="text-gray-400 text-sm mt-1">{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
       
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-8">
+      <footer className="bg-gray-900/80 backdrop-blur-md border-t border-gray-800 mt-12">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-4 md:mb-0">
-              <span className="text-gray-700 font-medium">S BEATS</span>
+              <div className="relative flex items-center justify-center w-8 h-8 mr-2">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#D946EF] to-[#FB7185] rounded-md opacity-60 blur-sm"></div>
+                <div className="absolute inset-0 bg-gray-900 rounded-md transform -translate-x-0.5 -translate-y-0.5"></div>
+                <span className="relative text-white font-bold">EN</span>
+              </div>
+              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#D946EF] to-[#FB7185]">
+                ECHO NEXUS
+              </span>
             </div>
             
             <p className="text-sm text-gray-500">
-              &copy; {new Date().getFullYear()} S BEATS. All rights reserved.
+              &copy; {new Date().getFullYear()} ECHO NEXUS. All rights reserved.
             </p>
+            
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <Link to="/" className="text-gray-400 hover:text-[#D946EF] transition-colors duration-300 relative group">
+                Home
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-[#D946EF] to-[#FB7185] group-hover:w-full transition-all duration-300"></span>
+              </Link>
+              <Link to="/product-list" className="text-gray-400 hover:text-[#D946EF] transition-colors duration-300 relative group">
+                Products
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-[#D946EF] to-[#FB7185] group-hover:w-full transition-all duration-300"></span>
+              </Link>
+              <Link to="#" className="text-gray-400 hover:text-[#D946EF] transition-colors duration-300 relative group">
+                Support
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-[#D946EF] to-[#FB7185] group-hover:w-full transition-all duration-300"></span>
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
